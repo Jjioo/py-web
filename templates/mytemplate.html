@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Displaying JSON Data</title>
+</head>
+<body>
+  <style>
+    table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #2e86de;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+  </style>
+   
+        <h1>News Titles and Writers</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Writer</th>
+            </tr>
+          </thead>
+          <tbody id="news">
+          </tbody>
+        </table>
+  <script>
+   fetch('../foxnews_data.json')
+  .then(response => response.json())
+  .then(data => {
+    const newsTable = document.getElementById('news');
+    data.titles.forEach((title, index) => {
+      const writer = data.writer[index];
+      const row = newsTable.insertRow(-1);
+      const titleCell = row.insertCell(0);
+      const writerCell = row.insertCell(1);
+      titleCell.innerText = title;
+      writerCell.innerText = writer;
+    });
+  })
+  .catch(error => console.error(error));
+
+  </script>
+</body>
+</html>
